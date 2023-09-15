@@ -43,7 +43,7 @@ export const localNet = {
 const range = n => [...Array(n).keys()]
 
 const getTestNetUrls = n => {
-  const instance = localhost ? `localhost{0}` : `node${n}`
+  const instance = `node${n}`;
   return {
     domain: localhost ? '127.0.0.1' : `${instance}.testnet.rchain.coop`,
     instance,
