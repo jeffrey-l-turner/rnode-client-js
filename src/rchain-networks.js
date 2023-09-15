@@ -44,7 +44,7 @@ const range = n => [...Array(n).keys()]
 const getTestNetUrls = n => {
   const instance = `node${n}`
   return {
-    domain: `${instance}.testnet.rchain.coop`,
+    domain: 'localhost',
     instance,
     shardId: testNetShardId,
     ...defaultPortsSSL,
