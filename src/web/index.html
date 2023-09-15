@@ -24,6 +24,9 @@
 <body>
   <div id="app"></div>
   <div id="log" class="ctrl"></div>
+  <script>
+    window.NODE_ENV = process.env.NODE_ENV === 'local' ? 'localhost' : 'testnet';
+  </script>
   <script type="module" src="./index.js"></script>
 </body>
 </html>
