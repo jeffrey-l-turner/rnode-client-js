@@ -4,3 +4,4 @@ dist/
 .gen
 rnode-grpc-*
 .aider*
+.env
