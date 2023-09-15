@@ -13,7 +13,6 @@
     "build": "parcel build --public-url ./ src/web/index.html",
     "rnode-generate": "rnode-grpc --rnode-version dev",
     "rnode-generate-dev": "rnode-grpc --rnode-version dev --gen-dir rnode-grpc-dev",
-    "localhostify": "node scripts/localhostify.js",
     "clean": "rimraf dist .cache",
     "clean:all": "rimraf dist .cache rnode-grpc-gen node_modules",
     "gh-pages": "npm run build-web && git checkout gh-pages && rm web.* style.* && cp dist/* . && git add ."

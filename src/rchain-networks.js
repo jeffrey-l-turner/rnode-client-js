@@ -1,4 +1,5 @@
 // @ts-check
+const localhost = process.env.local;
 const defaultPorts    = { grpc: 40401, http: 40403, httpAdmin: 40405 }
 const defaultPortsSSL = { grpc: 40401, https: 443, httpAdmin: 40405 }
 
@@ -44,7 +45,7 @@ const range = n => [...Array(n).keys()]
 const getTestNetUrls = n => {
   const instance = `node${n}`
   return {
-    domain: 'localhost',
+    domain: localhost ? '127.0.0.1' : `${instance}.testnet.rchain.coop`,
     instance,
     shardId: testNetShardId,
     ...defaultPortsSSL,
