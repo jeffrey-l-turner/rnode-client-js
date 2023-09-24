@@ -4,6 +4,17 @@ See also recording of code walk-thru sessions:
  - [2020\-07\-28 RChain Education](https://youtu.be/5JEtt53EacI?t=1043)
  - [2020\-08\-25 RChain Education](https://www.youtube.com/watch?v=2EUd2vOiJX8)
 
+## Quickstart for Forked Localhost client
+
+```
+git clone git@jeffrey-l-turner;rnode-client-js ; 
+cd rnode-client-js
+npm i # assumes Node 18 (`nvm use 18`) and npm -g npm
+npm run 
+npm run build-local:web
+npm run start-local:web
+```
+
 ## Web (HTTP)
 
 In the browser connection to RNode can be done with **RNode Web API**. It's also possible to use gRPC with the proxy.  
