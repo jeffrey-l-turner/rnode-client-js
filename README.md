@@ -10,7 +10,6 @@ See also recording of code walk-thru sessions:
 git clone git@jeffrey-l-turner;rnode-client-js ; 
 cd rnode-client-js
 npm i # assumes Node 16 (`nvm use 16`) and npm -g npm
-npm run 
 npm run build-local:web
 npm run start-local:web
 ```
