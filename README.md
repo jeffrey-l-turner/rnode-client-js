@@ -12,7 +12,7 @@ cd rnode-client-js
 npm i # assumes Node 16 (`nvm use 16`) and npm -g npm
 npm run 
 npm run build-local:web
-port=<docker/rnode_port> npm run start-local:web
+npm run start-local:web
 ```
 
 ## Web (HTTP)
