@@ -30,120 +30,128 @@ in {
   }
 }`
 
+const sampleMettaCode = `[{(f 5)},{(= (f x) (h (g x)))},{},{}]`
+
 const samples = [
-  ['return data', sampleReturnCode],
-  ['insert to registry', sampleInsertToRegistry],
-  ['registry lookup', sampleRegistryLookup],
+	['return data', sampleReturnCode],
+	['insert to registry', sampleInsertToRegistry],
+	['registry lookup', sampleRegistryLookup],
+	['metta code', sampleMettaCode]
 ]
 
 /**
  * @param { import("@tgrospic/rnode-grpc-js").RevAddress[] } wallet
  */
 const initSelected = (st, wallet /** @param any[] */) => {
-  const {selRevAddr, phloLimit = 500e3} = st
+	const { selRevAddr, phloLimit = 500e3 } = st
 
-  // Pre-select first account if not selected
-  const initRevAddr = R.isNil(selRevAddr) && !R.isNil(wallet) && !!wallet.length
-    ? R.head(wallet).revAddr : selRevAddr
+	// Pre-select first account if not selected
+	const initRevAddr = R.isNil(selRevAddr) && !R.isNil(wallet) && !!wallet.length
+		? R.head(wallet).revAddr : selRevAddr
 
-  return {...st, selRevAddr: initRevAddr, phloLimit}
+	return { ...st, selRevAddr: initRevAddr, phloLimit }
 }
 
-export const customDeployCtrl = (st, {wallet = [], node, onSendDeploy, onPropose, warn}) => {
-  const onSendDeployEv = code => async _ => {
-    st.update(s => ({...s, status: '...', dataError: ''}))
+export const customDeployCtrl = (st, { wallet = [], node, onSendDeploy, onPropose, warn }) => {
+	const onSendDeployEv = code => async _ => {
+		st.update(s => ({ ...s, status: '...', dataError: '' }))
 
-    const account = R.find(R.propEq('revAddr', selRevAddr), wallet)
-    const [status, dataError] = await onSendDeploy({code, account, phloLimit})
-      .then(x => [x, ''])
-      .catch(ex => {
-        warn('DEPLOY ERROR', ex)
-        return ['', ex.message]
-      })
+		const account = R.find(R.propEq('revAddr', selRevAddr), wallet)
+		const [status, dataError] = await onSendDeploy({ code, account, phloLimit })
+			.then(x => [x, ''])
+			.catch(ex => {
+				warn('DEPLOY ERROR', ex)
+				return ['', ex.message]
+			})
 
-    st.update(s => ({...s, status, dataError}))
-  }
+		st.update(s => ({ ...s, status, dataError }))
+	}
 
-  const onProposeEv = async _ => {
-    st.update(s => ({...s, proposeStatus: '...', proposeError: ''}))
+	const onProposeEv = async _ => {
+		st.update(s => ({ ...s, proposeStatus: '...', proposeError: '' }))
 
-    const [proposeStatus, proposeError] = await onPropose(node)
-      .then(x => [x, ''])
-      .catch(ex => ['', ex.message])
+		const [proposeStatus, proposeError] = await onPropose(node)
+			.then(x => [x, ''])
+			.catch(ex => ['', ex.message])
 
-    st.update(s => ({...s, proposeStatus, proposeError}))
-  }
+		st.update(s => ({ ...s, proposeStatus, proposeError }))
+	}
 
-  const accountChangeEv = ev => {
-    const { revAddr } = wallet[ev.target.selectedIndex]
-    st.update(s => ({...s, selRevAddr: revAddr}))
-  }
+	const accountChangeEv = ev => {
+		const { revAddr } = wallet[ev.target.selectedIndex]
+		st.update(s => ({ ...s, selRevAddr: revAddr }))
+	}
 
-  const updateCodeEv = code => _ => {
-    st.update(s => ({...s, code}))
-  }
+	const updateCodeEv = code => _ => {
+		st.update(s => ({ ...s, code }))
+	}
 
-  // Field update by name
-  const valEv = name => ev => {
-    const val = ev.target.value
-    st.update(s => ({...s, [name]: val}))
-  }
+	// Field update by name
+	const valEv = name => ev => {
+		const val = ev.target.value
+		st.update(s => ({ ...s, [name]: val }))
+	}
 
-  // Control state
-  const {selRevAddr, code, phloLimit, status, dataError, proposeStatus, proposeError}
-    = initSelected(st.view({}), wallet)
+	// Control state
+	const { selRevAddr, code, phloLimit, status, dataError, proposeStatus, proposeError }
+		= initSelected(st.view({}), wallet)
 
-  const tokenName        = node.tokenName
-  const labelAddr        = 'Signing account'
-  const labelCode        = 'Rholang code'
-  const labelPhloLimit   = `Phlo limit (in tiny ${tokenName} x10^${node.tokenDecimal})`
-  const isWalletEmpty    = R.isNil(wallet) || R.isEmpty(wallet)
-  const showPropose      = node.network === 'localnet'
-  const canDeploy        = (code || '').trim() !== '' && !!selRevAddr
-  const phloLimitPreview = showTokenDecimal(phloLimit, node.tokenDecimal)
+	const tokenName = node.tokenName
+	const labelAddr = 'Signing account'
+	const labelCode = 'Rholang / Metta code'
+	const labelPhloLimit = `Phlo limit (in tiny ${tokenName} x10^${node.tokenDecimal})`
+	const isWalletEmpty = R.isNil(wallet) || R.isEmpty(wallet)
+	const showPropose = node.network === 'localnet'
+	const canDeploy = (code || '').trim() !== '' && !!selRevAddr
+	const phloLimitPreview = showTokenDecimal(phloLimit, node.tokenDecimal)
 
-  return m('.ctrl.custom-deploy-ctrl',
-    m('h2', 'Custom deploy'),
-    isWalletEmpty ? m('b', `${node.tokenName} wallet is empty, add accounts to make deploys.`) : [
-      m('span', 'Send deploy to selected validator RNode.'),
+	return m('.ctrl.custom-deploy-ctrl',
+		m('h2', 'Custom deploy'),
+		isWalletEmpty ? m('b', `${node.tokenName} wallet is empty, add accounts to make deploys.`) : [
+			m('span', 'Send deploy to selected validator RNode.'),
 
-      // Rholang examples
-      m('',
-        m('span', 'Sample code: '),
-        samples.map(([title, code]) =>
-          m('a', {onclick: updateCodeEv(code), href: '#'}, title),
-        )
-      ),
+			// Rholang examples
+			m('',
+				m('span', 'Sample code: '),
+				samples.map(([title, code]) =>
+					m('a', { onclick: updateCodeEv(code), href: '#' }, title),
+				)
+			),
 
-      // REV address dropdown
-      m('', labelStyle(!!selRevAddr), labelAddr),
-      m('select', {onchange: accountChangeEv},
-        wallet.map(({name, revAddr}) =>
-          m('option', `${name}: ${revAddr}`)
-        ),
-      ),
+			// REV address dropdown
+			m('', labelStyle(!!selRevAddr), labelAddr),
+			m('select', { onchange: accountChangeEv },
+				wallet.map(({ name, revAddr }) =>
+					m('option', `${name}: ${revAddr}`)
+				),
+			),
 
-      // Rholang code (editor)
-      m('', labelStyle(code), labelCode),
-      m('textarea.deploy-code', {value: code, rows: 13, placeholder: 'Rholang code', oninput: valEv('code')}),
+			// Rholang code (editor)
+			m('', labelStyle(code), labelCode),
+			m('textarea.deploy-code', { value: code, rows: 13, placeholder: 'Rholang / Metta code', oninput: valEv('code') }),
 
-      // Phlo limit
-      m('', labelStyle(true), labelPhloLimit),
-      m('input[type=number].phlo-limit', {
-        value: phloLimit, placeholder: labelPhloLimit, oninput: valEv('phloLimit')
-      }),
-      labelRev(phloLimitPreview, tokenName),
+			// Phlo limit
+			m('', labelStyle(true), labelPhloLimit),
+			m('input[type=number].phlo-limit', {
+				value: phloLimit, placeholder: labelPhloLimit, oninput: valEv('phloLimit')
+			}),
+			labelRev(phloLimitPreview, tokenName),
 
-      // Action buttons / results
-      m(''),
-      m('button', {onclick: onSendDeployEv(code), disabled: !canDeploy}, 'Deploy Rholang code'),
-      status && m('b', status),
-      dataError && m('b.warning', showNetworkError(dataError)),
+			// Action buttons / results
+			m(''),
+			m('button', { onclick: onSendDeployEv(code), disabled: !canDeploy }, 'Deploy Rholang code'),
+			status && m('b', status),
+			dataError && m('b.warning', showNetworkError(dataError)),
 
-      m(''),
-      showPropose && m('button', {onclick: onProposeEv}, 'Propose'),
-      showPropose && proposeStatus && m('b', proposeStatus),
-      showPropose && proposeError && m('b.warning', showNetworkError(proposeError)),
-    ]
-  )
+			m(''),
+			m('button', { onclick: onSendDeployEv(code), disabled: !canDeploy }, 'Deploy Metta code'),
+			status && m('b', status),
+			dataError && m('b.warning', showNetworkError(dataError)),
+
+			m(''),
+			showPropose && m('button', { onclick: onProposeEv }, 'Propose'),
+			showPropose && proposeStatus && m('b', proposeStatus),
+			showPropose && proposeError && m('b.warning', showNetworkError(proposeError)),
+		]
+	)
 }
