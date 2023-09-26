@@ -30,7 +30,7 @@ in {
   }
 }`
 
-const sampleMettaCode = `[{(f 5)},{(= (f x) (h (g x)))},{},{}]`
+const sampleMettaCode = `[{(+ 5 1)},{},{},{}]`
 
 const samples = [
 	['return data', sampleReturnCode],
