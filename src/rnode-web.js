@@ -180,7 +180,7 @@ const signPrivKey = (deployData, privateKey) => {
 	const deploy = signDeploy(key, deployData)
 	// Verify deploy signature
 	const isValidDeploy = verifyDeploy(deploy)
-	console.log(isValidDeploy)
+	// console.log(isValidDeploy)
 	if (!isValidDeploy) throw Error('Deploy signature verification failed.')
 
 	return toWebDeploy(deploy)
@@ -189,12 +189,12 @@ const signPrivKey = (deployData, privateKey) => {
 // Converts JS object from protobuf spec. to Web API spec.
 const toWebDeploy = deployData => {
 	const {
-		term, timestamp, phloPrice, phloLimit, validAfterBlockNumber, shardId,
+		term, timestamp, phloPrice, phloLimit, validAfterBlockNumber, shardId, language,
 		deployer, sig, sigAlgorithm,
 	} = deployData
 
 	const result = {
-		data: { term, timestamp, phloPrice, phloLimit, validAfterBlockNumber, shardId },
+		data: { term, timestamp, phloPrice, phloLimit, validAfterBlockNumber, shardId, language },
 		sigAlgorithm,
 		signature: encodeBase16(sig),
 		deployer: encodeBase16(deployer),
