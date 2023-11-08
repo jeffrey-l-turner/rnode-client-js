@@ -2,6 +2,7 @@
 const localhost = `${process.env.port}`;
 const defaultPorts    = { grpc: 40401, http: 40403, httpAdmin: 40405 }
 const defaultPortsSSL = { grpc: 40401, https: 443, httpAdmin: 40405 }
+const customPorts = { grpc: 40401, http: 40403, httpAdmin: 40405 }
 
 // Shard IDs
 const defaultShardId = 'root'
@@ -21,6 +22,7 @@ export const localNet = {
   tokenName,
   tokenDecimal: defautTokenDecimal,
   hosts: [
+    { domain: '127.0.0.1', shardId: "root", ...customPorts },
     { domain: 'localhost', shardId: defaultShardId, ...defaultPorts },
     { domain: 'localhost', shardId: defaultShardId, grpc: 40411, http: 40413, httpAdmin: 40415 },
     { domain: 'localhost', shardId: defaultShardId, grpc: 40421, http: 40423, httpAdmin: 40425 },
@@ -62,6 +64,7 @@ export const testNet = {
   hosts: testnetHosts,
   readOnlys: [
     { domain: 'observer.testnet.rchain.coop', instance: 'observer', shardId: testNetShardId, ...defaultPortsSSL },
+    { domain: '127.0.0.1', instance: 'validator', shardId: "root", ...customPorts },
   ],
 }
 

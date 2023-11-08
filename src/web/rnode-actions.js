@@ -80,7 +80,9 @@ const appSendDeploy = effects => async ({node, code, account, phloLimit, setStat
   updateProgress()
 
   // Try to get result from next proposed block
+  console.log("getDataForDeploy")
   const {data, cost} = await getDataForDeploy(node, signature, updateProgress)
+  console.log("got the DataForDeploy")
   // Extract data from response object
   const args = data ? rhoExprToJS(data.expr) : void 0
 

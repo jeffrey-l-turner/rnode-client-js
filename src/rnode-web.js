@@ -61,6 +61,9 @@ const sendDeploy = rnodeHttp => async (node, account, code, phloLimit) => {
 		}
 	}
 
+	console.log("sendDeploy")
+	console.log("code = " + code)
+
 	// Get the latest block number
 	const [{ blockNumber }] = await rnodeHttp(node.httpUrl, 'blocks/1')
 

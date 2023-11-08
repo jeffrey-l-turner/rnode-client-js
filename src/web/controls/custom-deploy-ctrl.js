@@ -55,7 +55,7 @@ const initSelected = (st, wallet /** @param any[] */) => {
 export const customDeployCtrl = (st, { wallet = [], node, onSendDeploy, onPropose, warn }) => {
 	const onSendDeployEv = code => async _ => {
 		st.update(s => ({ ...s, status: '...', dataError: '' }))
-
+		console.log("customDeployCtrl")
 		const account = R.find(R.propEq('revAddr', selRevAddr), wallet)
 		const [status, dataError] = await onSendDeploy({ code, account, phloLimit })
 			.then(x => [x, ''])
@@ -143,10 +143,10 @@ export const customDeployCtrl = (st, { wallet = [], node, onSendDeploy, onPropos
 			status && m('b', status),
 			dataError && m('b.warning', showNetworkError(dataError)),
 
-			m(''),
-			m('button', { onclick: onSendDeployEv(code), disabled: !canDeploy }, 'Deploy Metta code'),
-			status && m('b', status),
-			dataError && m('b.warning', showNetworkError(dataError)),
+			// m(''),
+			// m('button', { onclick: onSendDeployEv(code), disabled: !canDeploy }, 'Deploy Metta code'),
+			// status && m('b', status),
+			// dataError && m('b.warning', showNetworkError(dataError)),
 
 			m(''),
 			showPropose && m('button', { onclick: onProposeEv }, 'Propose'),
