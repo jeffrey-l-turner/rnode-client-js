@@ -1,13 +1,13 @@
-# This code has been forked from https://github.com/tgrospic/rnode-client-js
+## This code has been forked from https://github.com/tgrospic/rnode-client-js
 ### Quickstart
 ```
 npm i
 npm run build:web # builds bundle
 npm run start:web # runs bundle locally
 ```
-> Use in `dev mode` to interact with shard/cluster or to generate and review ETH, Public/Private keys, and REV addresses
+* Use in `dev mode` to interact with shard/cluster or to generate and review ETH, Public/Private keys, and REV addresses
 
-# RNode JS client examples
+## RNode JS client examples
 
 See also recording of code walk-thru sessions:
  - [2020\-07\-28 RChain Education](https://youtu.be/5JEtt53EacI?t=1043)
