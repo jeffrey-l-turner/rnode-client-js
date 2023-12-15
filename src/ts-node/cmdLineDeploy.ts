@@ -1,21 +1,35 @@
 // @ts-check
-import * as R from 'ramda'
-import { ec } from 'elliptic'
+import * as R from 'ramda';
+import { ec } from 'elliptic';
 import * as protoLoader from '@grpc/proto-loader';
 import * as grpcLibrary from 'grpc';
 
-import { encodeBase16, decodeBase16 } from '../lib.js'
-import { verifyDeployEth, recoverPublicKeyEth } from '../eth/eth-sign.js'
-import { ethDetected, ethereumAddress, ethereumSign } from '../eth/eth-wrapper.js'
-import { signDeploy, verifyDeploy, deployDataProtobufSerialize } from '../rnode-sign'
+import { encodeBase16, decodeBase16 } from '../lib.js';
+import { verifyDeployEth, recoverPublicKeyEth } from '../eth/eth-sign.js';
+import {
+  ethDetected,
+  ethereumAddress,
+  ethereumSign,
+} from '../eth/eth-wrapper.js';
+import {
+  signDeploy,
+  verifyDeploy,
+  deployDataProtobufSerialize,
+} from '../rnode-sign';
 
-const main = () => {
-  const packageDefinition = protoLoader.loadSync('./rnode-grpc-gen/proto/CasperMessage.proto', {});
+const main = (args: string[]) => {
+  const privKey = args[0];
+  console.log('Private Key:', privKey);
+
+  const packageDefinition = protoLoader.loadSync(
+    './rnode-grpc-gen/proto/CasperMessage.proto',
+    {}
+  );
   const packageObject = grpcLibrary.loadPackageDefinition(packageDefinition);
   console.dir(packageObject);
 };
 
-main();
+main(process.argv.slice(2));
 process.exit(0);
 
 // const sendDeploy = rnodeHttp => async (node, account, code, phloLimit) => {
