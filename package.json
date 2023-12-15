@@ -8,6 +8,7 @@
     "start:nodejs": "node src/nodejs/client",
     "start:web": "parcel src/web/index.html",
     "start-local:web": "cross-env NODE_ENV=local parcel src/web/index.html",
+    "grospic-cli": "cross-env NODE_ENV=local ts-node src/ts-node/cmdLineDeploy.ts",
     "build:web": "npm-run-all clean build",
     "build-local:web": "cross-env NODE_ENV=local npm-run-all clean build",
     "build": "parcel build --public-url ./ src/web/index.html",
@@ -45,7 +46,7 @@
     "rimraf": "^3.0.2",
     "stream-browserify": "^3.0.0",
     "ts-node": "^10.9.2",
-    "typescript": "^4.4.4"
+    "typescript": "^4.9.5"
   },
   "browserslist": "> 0.25%, not dead",
   "engines": {

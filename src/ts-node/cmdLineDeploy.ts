@@ -9,13 +9,12 @@ import { verifyDeployEth, recoverPublicKeyEth } from '../eth/eth-sign.js'
 import { ethDetected, ethereumAddress, ethereumSign } from '../eth/eth-wrapper.js'
 import { signDeploy, verifyDeploy, deployDataProtobufSerialize } from '../rnode-sign'
 
-
-
 const main = () => {
   const packageDefinition = protoLoader.loadSync('../../../f1r3fly/node/target/protobuf_external/', {});
   const packageObject = grpc.loadPackageDefinition(packageDefinition);
   console.dir(packageObject);
 };
+
 main();
 process.exit(0);
 
