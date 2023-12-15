@@ -1,8 +1,8 @@
 // @ts-check
 import * as R from 'ramda'
 import { ec } from 'elliptic'
-import protoLoader from  '@grpc/proto-loader';
-import grpc from  '@grpc/grpc-js';
+import protoLoader = require('@grpc/proto-loader');
+import grpcLibrary = require('grpc');
 
 import { encodeBase16, decodeBase16 } from '../lib.js'
 import { verifyDeployEth, recoverPublicKeyEth } from '../eth/eth-sign.js'
@@ -11,7 +11,7 @@ import { signDeploy, verifyDeploy, deployDataProtobufSerialize } from '../rnode-
 
 const main = () => {
   const packageDefinition = protoLoader.loadSync('../../../f1r3fly/node/target/protobuf_external/', {});
-  const packageObject = grpc.loadPackageDefinition(packageDefinition);
+  const packageObject = grpcLibrary.loadPackageDefinition(packageDefinition);
   console.dir(packageObject);
 };
 
