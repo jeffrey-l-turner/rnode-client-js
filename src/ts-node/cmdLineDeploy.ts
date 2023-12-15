@@ -1,6 +1,8 @@
 // @ts-check
 import * as R from 'ramda'
 import { ec } from 'elliptic'
+import protoLoader from  '@grpc/proto-loader';
+import grpc from  '@grpc/grpc-js';
 
 import { encodeBase16, decodeBase16 } from '../lib.js'
 import { verifyDeployEth, recoverPublicKeyEth } from '../eth/eth-sign.js'
