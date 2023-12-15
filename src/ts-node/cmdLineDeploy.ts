@@ -159,3 +159,10 @@ const signPrivKey = (deployData, privateKey) => {
 
 	return toWebDeploy(deploy)
 }
+// Placeholder for the toWebDeploy function
+// Replace this with the actual implementation or import statement
+function toWebDeploy(deploy: any): any {
+  // TODO: Implement the function or import it from the correct module
+  console.warn('toWebDeploy function is not implemented');
+  return deploy;
+}
