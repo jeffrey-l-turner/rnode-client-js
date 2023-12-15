@@ -10,7 +10,7 @@ import { ethDetected, ethereumAddress, ethereumSign } from '../eth/eth-wrapper.j
 import { signDeploy, verifyDeploy, deployDataProtobufSerialize } from '../rnode-sign'
 
 const main = () => {
-  const packageDefinition = protoLoader.loadSync('../f1r3fly/node/target/protobuf_external/', {});
+  const packageDefinition = protoLoader.loadSync('../f1r3fly/models/src/main/protobuf/CasperMessage.proto', {});
   const packageObject = grpcLibrary.loadPackageDefinition(packageDefinition);
   console.dir(packageObject);
 };
