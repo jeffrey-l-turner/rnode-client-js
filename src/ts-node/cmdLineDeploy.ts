@@ -28,7 +28,7 @@ const main = (args: string[]) => {
 
   const rnodeInternalUrl = 'localhost:40402';
   // ToDo: this is updated from Grospic's but still does not look right
-  const options = host => ({ grpcLib: grpc, clientOptions: '', host: rnodeInternalUrl, protoSchema });
+  const options = host => ({ grpcLib: grpc, clientOptions: '', host: host, protoSchema });
   const deployObj = rnodeDeploy(options(rnodeInternalUrl));
 
   /* console.warn('deployObj:');
