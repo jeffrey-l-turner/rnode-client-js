@@ -50,11 +50,12 @@ const main = (args: string[]) => {
   const flag = args.slice(2)[0];
   switch (flag) {
     case '--http':
-      const result = httpSignDeploy(keys.privateKey, deployObj);
-      console.dir(result);
+      const httpResult = httpSignDeploy(keys.privateKey, deployObj);
+      console.dir(httpResult);
       break;
     case '--grpc':
-      grpcSignDeploy(keys, lastFinalizedBlock);
+      const grpcResult = grpcSignDeploy(keys, lastFinalizedBlock);
+      console.dir(grpcResult);
       break;
     default:
       usage();
