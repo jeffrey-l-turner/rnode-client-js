@@ -1,4 +1,5 @@
 // @ts-check
+//  remember to run: `npm run rnode-generate`
 import * as R from 'ramda';
 import { ec } from 'elliptic';
 import * as protoLoader from '@grpc/proto-loader';
@@ -12,20 +13,11 @@ import {
 //const { rnodeDeploy, rnodePropose, signDeploy, verifyDeploy, rhoParToJson } = require('@tgrospic/rnode-grpc-js')
 //import  { rnodeExample } from '../nodejs/client.js';
 
-const protoSchema = require('../../rnode-grpc-gen/js/pbjs_generated.json')
-import { encodeBase16, decodeBase16 } from '../lib.js';
-import { verifyDeployEth, recoverPublicKeyEth } from '../eth/eth-sign.js';
-import {
-  ethDetected,
-  ethereumAddress,
-  ethereumSign,
-} from '../eth/eth-wrapper.js';
-/*
-import {
-  signDeploy,
-  verifyDeploy,
-  deployDataProtobufSerialize,
-} from '../rnode-sign'; */
+import * as protoSchema from '../../rnode-grpc-gen/js/pbjs_generated.json';
+//import { encodeBase16, decodeBase16 } from '../lib.js';
+//import { verifyDeployEth, recoverPublicKeyEth } from '../eth/eth-sign.js';
+// import { ethDetected, ethereumAddress, ethereumSign, } from '../eth/eth-wrapper.js';
+// import { signDeploy, verifyDeploy, deployDataProtobufSerialize, } from '../rnode-sign'; */
 import * as grpc from '@grpc/grpc-js';
 
 const main = (args: string[]) => {
@@ -39,7 +31,6 @@ const main = (args: string[]) => {
   }
 
   //const packageDefinition = protoLoader.loadSync(
-    //'./rnode-grpc-gen/proto/CasperMessage.proto', // must run: `npm run rnode-generate`
     //{}
   // );
   //const packageObject = grpcLibrary.loadPackageDefinition(packageDefinition);
