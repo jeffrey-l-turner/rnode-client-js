@@ -3,19 +3,33 @@ import * as R from 'ramda'
 import { ec } from 'elliptic'
 import * as protoLoader from '@grpc/proto-loader';
 import * as grpcLibrary from 'grpc';
+// import { addressCtrl } from '../web/controls/address-ctrl.js';
+import {
+  getAddrFromPrivateKey, getAddrFromPublicKey, getAddrFromEth,
+  newRevAddress, verifyRevAddr,
+} from '@tgrospic/rnode-grpc-js'
 
 import { encodeBase16, decodeBase16 } from '../lib.js'
 import { verifyDeployEth, recoverPublicKeyEth } from '../eth/eth-sign.js'
 import { ethDetected, ethereumAddress, ethereumSign } from '../eth/eth-wrapper.js'
 import { signDeploy, verifyDeploy, deployDataProtobufSerialize } from '../rnode-sign'
 
-const main = () => {
+const main = (privKey) => {
   const packageDefinition = protoLoader.loadSync('./rnode-grpc-gen/proto/CasperMessage.proto', {});
   const packageObject = grpcLibrary.loadPackageDefinition(packageDefinition);
+  console.warn('reading grpc Protobuf definitions');
   console.dir(packageObject);
+  const val = privKey.replace(/^0x/, '').trim()
+  const keys = {
+    fromPriv: getAddrFromPrivateKey(val),
+    fromPub:  getAddrFromPublicKey(val),
+    fromEth:  getAddrFromEth(val),
+    isRev: verifyRevAddr(val)
+  };
+  console.dir(keys);
 };
 
-main();
+main('d381a7e23c8ecdd14116f217621c54c0509b2848eed24ee1301e6b79454c9663');
 process.exit(0);
 
 // const sendDeploy = rnodeHttp => async (node, account, code, phloLimit) => {
