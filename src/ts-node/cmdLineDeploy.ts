@@ -41,12 +41,12 @@ const main = (args: string[]) => {
 
 const grpcSignDeploy = async (keys, lastFinalizedBlock) => {
   console.log('inside grpcSignDeploy...');
-  let lastBlockObj = {blockinfo: {blockinfo: {blocknumber: 0}}};
-  try { 
-    lastBlockObj = (lastBlockObj = await lastFinalizedBlock())
-  } catch(err) {
-    console.warn(`could not call lastFinalizedBlock(): ${err}`)
-  };
+  let lastBlockObj = { blockinfo: { blockinfo: { blocknumber: 0 } } };
+  try {
+    lastBlockObj = (await lastFinalizedBlock());
+  } catch (err) {
+    console.warn(`could not call lastFinalizedBlock(): ${err}`);
+  }
   console.log('lastBlockObj:');
   console.dir(lastBlockObj);
 
@@ -71,6 +71,4 @@ const grpcSignDeploy = async (keys, lastFinalizedBlock) => {
   console.log(result);
 }
 
-main(process.argv);
-
-process.exit(0);
+ main(process.argv);
