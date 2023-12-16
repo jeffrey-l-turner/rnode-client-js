@@ -2,7 +2,8 @@
 ```
 npm i # install packages
 npm run rnode-generate # generate protopofs
-npm run grospic-cli -- <private_key> # run command line grpc util
+npm run grospic-cli -- --grpc <private_key> # run command line grpc send deploy
+npm run grospic-cli -- --http <private_key> # run command line http send deploy
 ```
 
 
