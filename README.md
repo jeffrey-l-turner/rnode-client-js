@@ -1,3 +1,11 @@
+### Quickstart for `grospic-cli` branch
+```
+npm i # install packages
+npm run rnode-generate # generate protopofs
+npm run grospic-cli -- <private_key> # run command line grpc util
+```
+
+
 # RNode JS client examples
 
 See also recording of code walk-thru sessions:
