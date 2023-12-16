@@ -23,7 +23,8 @@ import {
 } from '../rnode-sign';
 
 const main = (args: string[]) => {
-  const privKey = args.slice(2);
+  console.log(args);
+  const privKey = args.slice(4)[0];
   if (args.length < 1) {
     console.warn(`usage: $args[0]: must include private key`)
     process.exit(1);
