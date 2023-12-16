@@ -25,8 +25,8 @@ import {
 const main = (args: string[]) => {
   console.log(args);
   const privKey = args.slice(4)[0];
-  if (args.length < 1) {
-    console.warn(`usage: $args[0]: must include private key`)
+  if (args.length < 3 || !privKey) {
+    console.warn(`usage: ${args[0]}: must include private key`)
     process.exit(1);
   }
 
