@@ -6,7 +6,8 @@
 import { encodeBase16 } from "../lib"
 
 // Ethereum object injected by Metamask
-const eth_ = window.ethereum
+// const eth_ = (window || {}).ethereum
+const eth_ = typeof window === 'undefined'  ? undefined : window.ethereum;
 
 export const ethDetected = !!eth_
 
