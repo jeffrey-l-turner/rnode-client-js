@@ -11,7 +11,7 @@ import * as grpc from '@grpc/grpc-js';
 const main = (args: string[]) => {
   const privKey = args.slice(3)[0];
   const usage = () => {
-    console.warn(`usage: ${args[0]} <--grpc | -http> <private key>: must include private key argument`)
+    console.warn(`usage: ${args[0]} <--grpc | --http> <private key>: must include private key argument`)
     console.warn(privKey);
     process.exit(1);
   };
@@ -28,10 +28,11 @@ const main = (args: string[]) => {
 
   const rnodeInternalUrl = 'localhost:40402';
   // ToDo: this is updated from Grospic's but still does not look right
-  const options = (obj) => ({ grpcLib: grpc, clientOptions: '', host: rnodeInternalUrl, protoSchema })[obj];
+  const options = host => ({ grpcLib: grpc, clientOptions: '', host: rnodeInternalUrl, protoSchema });
   const deployObj = rnodeDeploy(options(rnodeInternalUrl));
-  console.warn('deployObj:');
-  console.dir(deployObj);
+
+  /* console.warn('deployObj:');
+  console.dir(deployObj); */
                                                                                                                                                                                                                                                                                                                                                                                                         
   const {
     getBlocks,
@@ -47,7 +48,7 @@ const main = (args: string[]) => {
     case '--http':
       httpSignDeploy(keys, lastFinalizedBlock);
       break;
-    case '-grpc':
+    case '--grpc':
       grpcSignDeploy(keys, lastFinalizedBlock);
       break;
     default:
