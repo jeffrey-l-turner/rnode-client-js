@@ -8,6 +8,7 @@
     "start:nodejs": "node src/nodejs/client",
     "start:web": "parcel src/web/index.html",
     "start-local:web": "cross-env NODE_ENV=local parcel src/web/index.html",
+    "grospic-cli": "cross-env NODE_ENV=local ts-node src/ts-node/cmdLineDeploy.ts",
     "build:web": "npm-run-all clean build",
     "build-local:web": "cross-env NODE_ENV=local npm-run-all clean build",
     "build": "parcel build --public-url ./ src/web/index.html",
@@ -19,11 +20,13 @@
   },
   "dependencies": {
     "@grpc/grpc-js": "^1.4.4",
+    "@grpc/proto-loader": "^0.7.10",
     "@tgrospic/rnode-grpc-js": "^0.11.0",
     "blakejs": "^1.1.1",
     "elliptic": "^6.5.4",
     "ethereumjs-util": "^7.1.3",
     "google-protobuf": "^3.19.1",
+    "grpc": "^1.24.11",
     "grpc-web": "^1.3.0",
     "mithril": "^2.0.4",
     "npm-run-all": "^4.1.5",
@@ -32,6 +35,7 @@
   "devDependencies": {
     "@parcel/transformer-less": "^2.1.1",
     "@types/elliptic": "^6.4.14",
+    "@types/ramda": "^0.29.9",
     "assert": "^2.0.0",
     "buffer": "^6.0.3",
     "cross-env": "^7.0.3",
@@ -43,10 +47,11 @@
     "protobufjs": "^6.11.2",
     "rimraf": "^3.0.2",
     "stream-browserify": "^3.0.0",
-    "typescript": "^4.4.4"
+    "ts-node": "^10.9.2",
+    "typescript": "^4.9.5"
   },
   "browserslist": "> 0.25%, not dead",
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=18.0.0"
   }
 }
