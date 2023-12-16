@@ -46,6 +46,7 @@ const grpcSignDeploy = async (keys, lastFinalizedBlock) => {
     lastBlockObj = (await lastFinalizedBlock());
   } catch (err) {
     console.warn(`could not call lastFinalizedBlock(): ${err}`);
+    process.exit(1);
   }
   console.log('lastBlockObj:');
   console.dir(lastBlockObj);
