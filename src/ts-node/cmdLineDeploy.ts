@@ -26,16 +26,13 @@ const main = (args: string[]) => {
     fromPriv_account: getAddrFromPrivateKey(val),
     isRev: verifyRevAddr(val)
   };
+  console.warn('keys:');
   console.dir(keys);
+  console.warn('------------------------------------------------');
 
-  const rnodeInternalUrl = 'localhost:40402';
+  const rnodeInternalUrl = 'localhost:40401';
   // ToDo: this is updated from Grospic's but still does not look right
   const options = host => ({ grpcLib: grpc, clientOptions: '', host: host, protoSchema });
-
-  /* console.warn('protoSchema:');
-  console.dir(protoSchema);
-  console.warn('deployObj:');
-  console.dir(deployObj); */
   
 const deployObj = rnodeDeploy(options(rnodeInternalUrl));
 
