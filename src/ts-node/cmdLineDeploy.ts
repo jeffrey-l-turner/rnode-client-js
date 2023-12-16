@@ -7,6 +7,8 @@ import {
 
 import * as protoSchema from '../../rnode-grpc-gen/js/pbjs_generated.json';
 import * as grpc from '@grpc/grpc-js';
+import * as rnodeSign from '../rnode-sign.js';
+// const httpSignDeploy = rnodeSign.signDeploy;
 
 const main = (args: string[]) => {
   const privKey = args.slice(3)[0];
@@ -59,38 +61,38 @@ const main = (args: string[]) => {
     }
 };
 
-const httpSignDeploy = async (keys, lastFinalizedBlock) => {
-  console.log('inside grpcSignDeploy...');
-  let lastBlockObj = { blockinfo: { blockinfo: { blocknumber: 0 } } };
-  try {
-    lastBlockObj = (await lastFinalizedBlock());
-  } catch (err) {
-    console.warn(`could not call lastFinalizedBlock(): ${err}`);
-    process.exit(1);
-  }
-  console.log('lastBlockObj:');
-  console.dir(lastBlockObj);
+const httpSignDeploy = (privateKey, deployObj) => rnodeSign.signDeploy(privateKey, deployObj);
+  // console.log('inside grpcSignDeploy...');
+  // let lastBlockObj = { blockinfo: { blockinfo: { blocknumber: 0 } } };
+  // try {
+  //   lastBlockObj = (await lastFinalizedBlock());
+  // } catch (err) {
+  //   console.warn(`could not call lastFinalizedBlock(): ${err}`);
+  //   process.exit(1);
+  // }
+  // console.log('lastBlockObj:');
+  // console.dir(lastBlockObj);
 
-  const sampleRholangCode = `
-    new return(\`rho:rchain:deployId\`), out(\`rho:io:stdout\`), x in {
-    out!("Nodejs deploy test") |
+  // const sampleRholangCode = `
+  //   new return(\`rho:rchain:deployId\`), out(\`rho:io:stdout\`), x in {
+  //   out!("Nodejs deploy test") |
 
-    // Return value from Rholang
-    return!(("Return value from deploy", [1], true, Set(42), {"my_key": "My value"}, *x))
-    }
-  `
-  console.log('LAST BLOCK', lastBlockObj)
-  const deployData = {
-    term: sampleRholangCode,
-    timestamp: Date.now(),
-    phloprice: 1,
-    phlolimit: 10e3,
-    validafterblocknumber: lastBlockObj.blockinfo?.blockinfo.blocknumber || 0,
-    shardid: 'root',
-  }
-  const result = signDeploy(keys.privateKey, deployData);
-  console.log(result);
-}
+  //   // Return value from Rholang
+  //   return!(("Return value from deploy", [1], true, Set(42), {"my_key": "My value"}, *x))
+  //   }
+  // `
+  // console.log('LAST BLOCK', lastBlockObj)
+  // const deployData = {
+  //   term: sampleRholangCode,
+  //   timestamp: Date.now(),
+  //   phloprice: 1,
+  //   phlolimit: 10e3,
+  //   validafterblocknumber: lastBlockObj.blockinfo?.blockinfo.blocknumber || 0,
+  //   shardid: 'root',
+  // }
+  // const result = signDeploy(keys.privateKey, deployData);
+  // console.log(result);
+//}
 const grpcSignDeploy = async (keys, lastFinalizedBlock) => {
   console.log('inside grpcSignDeploy...');
   let lastBlockObj = { blockinfo: { blockinfo: { blocknumber: 0 } } };
