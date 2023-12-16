@@ -9,7 +9,7 @@ import {
   newRevAddress, verifyRevAddr,
 } from '@tgrospic/rnode-grpc-js';
 
-import  { rnodeExample } from '../nodejs/client.js';
+//import  { rnodeExample } from '../nodejs/client.js';
 
 import { encodeBase16, decodeBase16 } from '../lib.js';
 import { verifyDeployEth, recoverPublicKeyEth } from '../eth/eth-sign.js';
@@ -50,7 +50,25 @@ const main = (args: string[]) => {
     isRev: verifyRevAddr(val)
   };
   console.dir(keys);
-  rnodeExample();
+  // rnodeExample();
+
+  const sampleRholangCode = `
+    new return(\`rho:rchain:deployId\`), out(\`rho:io:stdout\`), x in {
+    out!("Nodejs deploy test") |
+
+    // Return value from Rholang
+    return!(("Return value from deploy", [1], true, Set(42), {"my_key": "My value"}, *x))
+    }
+  `
+  const deployData = {
+    term: sampleRholangCode,
+    timestamp: Date.now(),
+    phloprice: 1,
+    phlolimit: 10e3,
+    validafterblocknumber: lastBlockObj.blockinfo?.blockinfo.blocknumber || 0,
+    shardid: 'root',
+  }
+  signDeploy(keys.privateKey, deployData);
 
 };
 
