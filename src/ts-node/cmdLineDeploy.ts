@@ -31,9 +31,11 @@ const main = (args: string[]) => {
   const options = host => ({ grpcLib: grpc, clientOptions: '', host: host, protoSchema });
   const deployObj = rnodeDeploy(options(rnodeInternalUrl));
 
-  /* console.warn('deployObj:');
+  /* console.warn('protoSchema:');
+  console.dir(protoSchema);
+  console.warn('deployObj:');
   console.dir(deployObj); */
-                                                                                                                                                                                                                                                                                                                                                                                                        
+  
   const {
     getBlocks,
     lastFinalizedBlock,
