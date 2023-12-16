@@ -1,6 +1,6 @@
 // @ts-check
-const defaultPorts    = { grpc: 40401, http: 40403, httpAdmin: 40405 }
-const defaultPortsSSL = { grpc: 40401, https: 443, httpAdmin: 40405 }
+const defaultPorts    = { grpc: 50401, http: 50403, httpAdmin: 50405 }
+const defaultPortsSSL = { grpc: 50401, https: 443, httpAdmin: 50405 }
 
 // Shard IDs
 const defaultShardId = 'root'
@@ -21,19 +21,13 @@ export const localNet = {
   tokenDecimal: defautTokenDecimal,
   hosts: [
     { domain: 'localhost', shardId: defaultShardId, ...defaultPorts },
-    { domain: 'localhost', shardId: defaultShardId, grpc: 40411, http: 40413, httpAdmin: 40415 },
-    { domain: 'localhost', shardId: defaultShardId, grpc: 40421, http: 40423, httpAdmin: 40425 },
-    { domain: 'localhost', shardId: defaultShardId, grpc: 40431, http: 40433, httpAdmin: 40435 },
-    { domain: 'localhost', shardId: defaultShardId, grpc: 40441, http: 40443, httpAdmin: 40445 },
-    { domain: 'localhost', shardId: defaultShardId, grpc: 40451, http: 40453, httpAdmin: 40455 },
+    { domain: 'localhost', shardId: defaultShardId, grpc: 40401, http: 40403, httpAdmin: 40405 },
+    { domain: 'localhost', shardId: defaultShardId, grpc: 50401, http: 50403, httpAdmin: 50405 },
+    { domain: 'localhost', shardId: defaultShardId, grpc: 60401, http: 60403, httpAdmin: 60405 },
   ],
   readOnlys: [
     { domain: 'localhost', shardId: defaultShardId, ...defaultPorts },
-    { domain: 'localhost', shardId: defaultShardId, grpc: 40411, http: 40413, httpAdmin: 40415 },
-    { domain: 'localhost', shardId: defaultShardId, grpc: 40421, http: 40423, httpAdmin: 40425 },
-    { domain: 'localhost', shardId: defaultShardId, grpc: 40431, http: 40433, httpAdmin: 40435 },
-    { domain: 'localhost', shardId: defaultShardId, grpc: 40441, http: 40443, httpAdmin: 40445 },
-    { domain: 'localhost', shardId: defaultShardId, grpc: 40451, http: 40453, httpAdmin: 40455 },
+    { domain: 'localhost', shardId: defaultShardId, grpc: 40401, http: 40403, httpAdmin: 40405 },
   ]
 }
 
