@@ -23,8 +23,11 @@ import {
 } from '../rnode-sign';
 
 const main = (args: string[]) => {
-  const privKey = args[0];
-  console.log('Private Key:', privKey);
+  const privKey = args.slice(2);
+  if (args.length < 1) {
+    console.warn(`usage: $args[0]: must include private key`)
+    process.exit(1);
+  }
 
   const packageDefinition = protoLoader.loadSync(
     './rnode-grpc-gen/proto/CasperMessage.proto', // must run: `npm run rnode-generate`
@@ -43,7 +46,7 @@ const main = (args: string[]) => {
   console.dir(keys);
 };
 
-main(process.argv.slice(2));
+main(process.argv);
 
 process.exit(0);
 
