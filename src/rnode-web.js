@@ -190,7 +190,7 @@ const signPrivKey = (deployData, privateKey) => {
 }
 
 // Converts JS object from protobuf spec. to Web API spec.
-const toWebDeploy = deployData => {
+export const toWebDeploy = deployData => {
 	const {
 		term, timestamp, phloPrice, phloLimit, validAfterBlockNumber, shardId, language,
 		deployer, sig, sigAlgorithm,

@@ -8,7 +8,7 @@ import {
 import * as protoSchema from '../../rnode-grpc-gen/js/pbjs_generated.json';
 import * as grpc from '@grpc/grpc-js';
 import * as rnodeSign from '../rnode-sign.js';
-// const httpSignDeploy = rnodeSign.signDeploy;
+import { toWebDeploy } from '../rnode-web.js';
 
 const main = (args: string[]) => {
   const privKey = args.slice(3)[0];
@@ -31,29 +31,32 @@ const main = (args: string[]) => {
   const rnodeInternalUrl = 'localhost:40402';
   // ToDo: this is updated from Grospic's but still does not look right
   const options = host => ({ grpcLib: grpc, clientOptions: '', host: host, protoSchema });
-  const deployObj = rnodeDeploy(options(rnodeInternalUrl));
 
   /* console.warn('protoSchema:');
   console.dir(protoSchema);
   console.warn('deployObj:');
   console.dir(deployObj); */
   
-  const {
-    getBlocks,
-    lastFinalizedBlock,
-    visualizeDag,
-    deployStatus,
-    doDeploy,
-    listenForDataAtName,
-  } = deployObj;
+const deployObj = rnodeDeploy(options(rnodeInternalUrl));
 
   const flag = args.slice(2)[0];
   switch (flag) {
     case '--http':
-      const httpResult = httpSignDeploy(keys.privateKey, deployObj);
+      const signedDeploy = httpSignDeploy(keys.privateKey, deployObj);
+      // console.warn('signedDeploy:');
+      // console.dir(signedDeploy);
+      signedDeploy.term = 'some term';
+      signedDeploy.timestamp = Date.now();
+      signedDeploy.phloPrice = '500';
+      signedDeploy.phloLimit = '1000';
+      signedDeploy.shardId = 'root';
+      signedDeploy. validAfterBlockNumber  =0;
+      signedDeploy.language = '';
+      const httpResult = toWebDeploy(signedDeploy);
       console.dir(httpResult);
       break;
     case '--grpc':
+      const { lastFinalizedBlock, } = deployObj;
       const grpcResult = grpcSignDeploy(keys, lastFinalizedBlock);
       console.dir(grpcResult);
       break;
