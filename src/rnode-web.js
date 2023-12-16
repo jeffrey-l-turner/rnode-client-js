@@ -71,7 +71,8 @@ const sendDeploy = rnodeHttp => async (node, account, code, phloLimit) => {
 	const phloLimitNum = !!phloLimit || phloLimit == 0 ? phloLimit : 500e3
 	const deployData = {
 		term: code,
-		phloLimit: phloLimitNum, phloPrice: 1,
+		phloLimit: phloLimitNum, 
+		phloPrice: 1,
 		validAfterBlockNumber: blockNumber,
 		timestamp: Date.now(),
 		shardId: node.shardId,
