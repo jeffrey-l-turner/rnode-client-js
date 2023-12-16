@@ -5,12 +5,14 @@ import * as protoLoader from '@grpc/proto-loader';
 import * as grpcLibrary from 'grpc';
 // import { addressCtrl } from '../web/controls/address-ctrl.js';
 import {
-  getAddrFromPrivateKey, getAddrFromPublicKey, getAddrFromEth,
-  newRevAddress, verifyRevAddr,
+  rnodeDeploy, signDeploy, getAddrFromPrivateKey, // rnodePropose,  getAddrFromPublicKey, getAddrFromEth,
+  verifyRevAddr, // rhoParToJson, verifyDeploy  newRevAddress, 
 } from '@tgrospic/rnode-grpc-js';
 
+//const { rnodeDeploy, rnodePropose, signDeploy, verifyDeploy, rhoParToJson } = require('@tgrospic/rnode-grpc-js')
 //import  { rnodeExample } from '../nodejs/client.js';
 
+const protoSchema = require('../../rnode-grpc-gen/js/pbjs_generated.json')
 import { encodeBase16, decodeBase16 } from '../lib.js';
 import { verifyDeployEth, recoverPublicKeyEth } from '../eth/eth-sign.js';
 import {
@@ -18,11 +20,13 @@ import {
   ethereumAddress,
   ethereumSign,
 } from '../eth/eth-wrapper.js';
+/*
 import {
   signDeploy,
   verifyDeploy,
   deployDataProtobufSerialize,
-} from '../rnode-sign';
+} from '../rnode-sign'; */
+import * as grpc from '@grpc/grpc-js';
 
 const main = (args: string[]) => {
   console.log(args);
@@ -52,6 +56,24 @@ const main = (args: string[]) => {
   console.dir(keys);
   // rnodeExample();
 
+  const rnodeInternalUrl = 'localhost:40402'
+  const options = host => ({ grpcLib: grpc, host, protoSchema })
+  const deployObj = rnodeDeploy(options(rnodeInternalUrl));
+  const {
+    getBlocks,
+    lastFinalizedBlock,
+    visualizeDag,
+    deployStatus,
+    doDeploy,
+    listenForDataAtName,
+  } = deployObj;
+
+  console.dir(deployObj);
+  grpcSignDeploy(keys, lastFinalizedBlock);
+};
+
+const grpcSignDeploy = async (keys, lastFinalizedBlock) => {
+  const lastBlockObj = await lastFinalizedBlock()
   const sampleRholangCode = `
     new return(\`rho:rchain:deployId\`), out(\`rho:io:stdout\`), x in {
     out!("Nodejs deploy test") |
@@ -60,6 +82,7 @@ const main = (args: string[]) => {
     return!(("Return value from deploy", [1], true, Set(42), {"my_key": "My value"}, *x))
     }
   `
+  console.log('LAST BLOCK', lastBlockObj)
   const deployData = {
     term: sampleRholangCode,
     timestamp: Date.now(),
@@ -69,8 +92,7 @@ const main = (args: string[]) => {
     shardid: 'root',
   }
   signDeploy(keys.privateKey, deployData);
-
-};
+}
 
 main(process.argv);
 
