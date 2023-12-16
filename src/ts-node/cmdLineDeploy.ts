@@ -25,9 +25,10 @@ import {
 const main = (args: string[]) => {
   console.log(args);
   console.log(args.length);
-  const privKey = args.slice(3)[0];
+  const privKey = args.slice(2)[0];
   if (args.length < 3 || !privKey) {
     console.warn(`usage: ${args[0]}: must include private key`)
+    console.warn(privKey);
     process.exit(1);
   }
 
@@ -36,8 +37,8 @@ const main = (args: string[]) => {
     {}
   );
   const packageObject = grpcLibrary.loadPackageDefinition(packageDefinition);
-  console.warn('reading grpc Protobuf definitions');
-  console.dir(packageObject);
+  console.warn('reading grpc Protobuf definitions...');
+  // console.dir(packageObject);
   const val = privKey.replace(/^0x/, '').trim()
   const keys = {
     fromPriv: getAddrFromPrivateKey(val),
