@@ -41,9 +41,10 @@ const main = (args: string[]) => {
   // console.dir(packageObject);
   const val = privKey.replace(/^0x/, '').trim()
   const keys = {
-    fromPriv: getAddrFromPrivateKey(val),
-    fromPub:  getAddrFromPublicKey(val),
-    fromEth:  getAddrFromEth(val),
+    privateKey: val,
+    fromPriv_account: getAddrFromPrivateKey(val),
+    //fromPub:  getAddrFromPublicKey(val),
+    //fromEth:  getAddrFromEth(val),
     isRev: verifyRevAddr(val)
   };
   console.dir(keys);
