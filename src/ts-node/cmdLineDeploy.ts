@@ -7,7 +7,9 @@ import * as grpcLibrary from 'grpc';
 import {
   getAddrFromPrivateKey, getAddrFromPublicKey, getAddrFromEth,
   newRevAddress, verifyRevAddr,
-} from '@tgrospic/rnode-grpc-js'
+} from '@tgrospic/rnode-grpc-js';
+
+import  { rnodeExample } from '../nodejs/client.js';
 
 import { encodeBase16, decodeBase16 } from '../lib.js';
 import { verifyDeployEth, recoverPublicKeyEth } from '../eth/eth-sign.js';
@@ -32,12 +34,12 @@ const main = (args: string[]) => {
     process.exit(1);
   }
 
-  const packageDefinition = protoLoader.loadSync(
-    './rnode-grpc-gen/proto/CasperMessage.proto', // must run: `npm run rnode-generate`
-    {}
-  );
-  const packageObject = grpcLibrary.loadPackageDefinition(packageDefinition);
-  console.warn('reading grpc Protobuf definitions...');
+  //const packageDefinition = protoLoader.loadSync(
+    //'./rnode-grpc-gen/proto/CasperMessage.proto', // must run: `npm run rnode-generate`
+    //{}
+  // );
+  //const packageObject = grpcLibrary.loadPackageDefinition(packageDefinition);
+  //console.warn('reading grpc Protobuf definitions...');
   // console.dir(packageObject);
   const val = privKey.replace(/^0x/, '').trim()
   const keys = {
@@ -48,6 +50,8 @@ const main = (args: string[]) => {
     isRev: verifyRevAddr(val)
   };
   console.dir(keys);
+  rnodeExample();
+
 };
 
 main(process.argv);
