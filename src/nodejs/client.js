@@ -29,7 +29,7 @@ const rnodeExternalUrl = 'localhost:40401'
 
 const rnodeInternalUrl = 'localhost:40402'
 
-const rnodeExample = async () => {
+export const rnodeExample = async () => {
   // Get RNode service methods
   const options = host => ({ grpcLib: grpc, host, protoSchema })
 
@@ -40,7 +40,7 @@ const rnodeExample = async () => {
     deployStatus,
     doDeploy,
     listenForDataAtName,
-  } = rnodeDeploy(options(rnodeExternalUrl))
+  } = rnodeDeploy(options(rnodeInternalUrl))
 
   const { propose } = rnodePropose(options(rnodeInternalUrl))
 
@@ -121,4 +121,4 @@ const rnodeExample = async () => {
   log('JSON', util.inspect(json2, {depth: 100, colors: true}))
 }
 
-rnodeExample()
+// await rnodeExample();
